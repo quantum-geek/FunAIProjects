@@ -6,6 +6,9 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import classification_report
 
+from src.preprocess import load_data, preprocess_reviews, convert_ratings_to_labels, vectorize_text
+
+
 def balance_data(data):
     """
     Balances the dataset by oversampling the minority classes (neutral and negative).
@@ -25,10 +28,15 @@ def balance_data(data):
 
     return balanced_data
 
-def train_model(data):
+def train_model(file_path):
     """
     Train a logistic regression model on the balanced data.
     """
+    # Load and preprocess the dataset
+    data = load_data(file_path)
+    data = preprocess_reviews(data)
+    data = convert_ratings_to_labels(data)
+
     # Balance the dataset
     balanced_data = balance_data(data)
 

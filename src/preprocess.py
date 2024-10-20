@@ -1,8 +1,12 @@
 import pandas as pd
 import nltk
+nltk.download('punkt')
+nltk.download('punkt_tab')
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 import string
+from sklearn.feature_extraction.text import TfidfVectorizer
+
 
 
 '''
@@ -75,3 +79,12 @@ def convert_ratings_to_labels(data):
     
     data['Sentiment'] = data['Score'].apply(label_rating)
     return data
+
+
+def vectorize_text(data):
+    """
+    Vectorize the 'CleanedText' column using TF-IDF.
+    """
+    tfidf = TfidfVectorizer(stop_words='english', max_features=5000)
+    X = tfidf.fit_transform(data['CleanedText'])
+    return X, data['Sentiment']
