@@ -14,6 +14,7 @@ def balance_data(data):
     positive = data[data['Sentiment'] == 'positive']
     neutral = data[data['Sentiment'] == 'neutral']
     negative = data[data['Sentiment'] == 'negative']
+    
 
     # Oversample the neutral and negative classes
     neutral_upsampled = resample(neutral, replace=True, n_samples=len(positive), random_state=42)
